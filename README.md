@@ -116,9 +116,9 @@ Disease-Prediction-Diabetes/
 │   └── diabetes.csv
 │
 ├── model/
-│   └── diabetes_xgboost_pipeline.pkl
+│   └── diabetes_xgboost_pipeline.joblib
 │
-├── train_model.py
+├── Diabetes Prediction Model Train.ipynb
 ├── app.py
 ├── requirements.txt
 └── README.md
@@ -140,9 +140,10 @@ Disease-Prediction-Diabetes/
 ## 👤 Author
 
 Name: **Ashish Raj**
-📌GitHub: [ashish](https://github.com/ashishraj-hub)
 
-📌LinkedIn: [ashish](https://www.linkedin.com/in/ashish-raj-ashishraj/)
+📌GitHub: [Ashish Raj](https://github.com/ashishraj-hub)
+
+📌LinkedIn: [Ashish Raj](https://www.linkedin.com/in/ashish-raj-ashishraj/)
 
 ---
 
