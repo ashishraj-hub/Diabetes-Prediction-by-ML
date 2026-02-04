@@ -98,7 +98,7 @@ A **Scikit-learn Pipeline** was created to combine:
 
 ---
 
-## 🚀 Deployment
+## 🚀 Deployment (Not working currently wait for some time)
 The trained pipeline was serialized using `joblib` and deployed using **Streamlit**.
 
 ### Run the Application Locally:
