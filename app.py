@@ -1,6 +1,7 @@
 import joblib
 import streamlit as st
 import numpy as np
+import pandas as pd
 
 model=joblib.load("diabetes_xgboost_pipeline.joblib")
 
@@ -16,9 +17,19 @@ dpf = st.number_input("Diabetes Pedigree Function", 0.0, 3.0)
 age = st.number_input("Age", 1, 120)
 
 if st.button("Predict"):
-    input_data=np.array([[preg,glucose,bp,skin,insulin,bmi,dpf,age]])
+    input_data = pd.DataFrame([{
+    "Pregnancies": preg,
+    "Glucose": glucose,
+    "BloodPressure": bp,
+    "SkinThickness": skin,
+    "Insulin": insulin,
+    "BMI": bmi,
+    "DiabetesPedigreeFunction": dpf,
+    "Age": age
+        }])
     prediction=model.predict(input_data)
     if prediction[0]==1:
         st.error("⚠ High chance of Diabetes")
     else:
-        st.success("✅ Low chance of Diabetes")
+        st.success("✅ NO chance of Diabetes")
+
