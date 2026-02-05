@@ -1,8 +1,8 @@
 numpy
-pandas
 scikit-learn
-xgboost==1.7.6
+xgboost
 joblib
 streamlit
 altair==4.2.2
 imghdr
+
