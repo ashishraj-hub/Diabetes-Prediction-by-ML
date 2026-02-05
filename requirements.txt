@@ -4,6 +4,5 @@ scikit-learn
 xgboost==1.7.6
 joblib
 streamlit
-matplotlib
-seaborn
 altair==4.2.2
+imghdr
