@@ -45,7 +45,8 @@ if st.button("Prediction"):
         st.write("Probablity:", prob)
     else:
         st.success("✅ Low chance of Diabetes")
-        print("Probablity:",prob)
+        st.write("Probablity:", prob")
+
 
 
 
