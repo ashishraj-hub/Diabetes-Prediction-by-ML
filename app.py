@@ -3,7 +3,18 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 
-model=joblib.load("diabetes_xgboost_pipeline.joblib")
+pipeline=joblib.load("diabetes_xgboost_pipeline.joblib")
+
+FEATURES = [
+    "Pregnancies",
+    "Glucose",
+    "BloodPressure",
+    "SkinThickness",
+    "Insulin",
+    "BMI",
+    "DiabetesPedigreeFunction",
+    "Age"
+]
 
 st.title("🩺 Diabetes Disease Prediction")
 
@@ -21,31 +32,25 @@ bmi = st.number_input("BMI", 10.0, 60.0)
 dpf = st.number_input("Diabetes Pedigree Function", 0.00, 3.00)
 age = st.number_input("Age", 1, 120)
 
-input_data=pd.DataFrame([{
-    "Pregnancies":preg,
-    "Glucose": glucose,
-    "BloodPressure": bp,
-    "SkinThickness": skin,
-    "Insulin": insulin,
-    "BMI": bmi,
-    "DiabetesPedigreeFunction": dpf,
-    "Age": age
-}])
+input_df = pd.DataFrame([[preg, glucose, bp, skin, insulin, bmi, dpf, age]],
+                        columns=FEATURES)
+st.write("Input Data:",input_df)
 
 if glucose == 0 or bmi == 0 or bp == 0:
     st.warning("Please enter valid medical values. Zero is not a realistic input.")
     st.stop()
 
-st.write("Prediction probability:", model.predict_proba(input_data))
-prob = model.predict_proba(input_data)[0][1]
+st.write("Prediction probability:", pipeline.predict_proba(input_df))
+prob = pipeline.predict_proba(input_df)[0][1]
+
+THRESHOLD=0.55
 
 if st.button("Prediction"):
-    if prob > 0.6:
-        st.error("⚠ High chance of Diabetes")
-        st.write("Probablity:", prob)
+    if prob >= THRESHOLD:
+        st.error(f"💀 High risk of diabetes (Probability: {prob:.2f})")
     else:
-        st.success("✅ Low chance of Diabetes")
-        st.write("Probablity:", prob)
+        st.success(f"✅ Low risk of diabetes (Probability: {prob:.2f})")
+
 
 
 
