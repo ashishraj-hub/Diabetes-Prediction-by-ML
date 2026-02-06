@@ -13,12 +13,12 @@ st.info(
 )
 
 preg=st.number_input("Pregnancies",0,20)
-glucose = st.slider("Glucose", 50, 200, 120)
-bp = st.slider("Blood Pressure", 40, 120, 70)
+glucose = st.number_input("Glucose", 50, 200)
+bp = st.number_input("Blood Pressure", 40, 120)
 skin = st.number_input("Skin Thickness", 0, 100)
 insulin = st.number_input("Insulin", 0, 900)
-bmi = st.slider("BMI", 10.0, 60.0, 25.0)
-dpf = st.number_input("Diabetes Pedigree Function", 0.0, 3.0)
+bmi = st.number_input("BMI", 10.0, 60.0)
+dpf = st.number_input("Diabetes Pedigree Function", 0.00, 3.00)
 age = st.number_input("Age", 1, 120)
 
 input_data=pd.DataFrame([{
@@ -42,8 +42,11 @@ prob = model.predict_proba(input_data)[0][1]
 if st.button("Prediction"):
     if prob > 0.6:
         st.error("⚠ High chance of Diabetes")
+        print("Probablity:",prob)
     else:
-        st.success("✅ Low chance of Diabetes") 
+        st.success("✅ Low chance of Diabetes")
+        print("Probablity:",prob)
+
 
 
 
