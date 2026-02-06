@@ -42,10 +42,11 @@ prob = model.predict_proba(input_data)[0][1]
 if st.button("Prediction"):
     if prob > 0.6:
         st.error("⚠ High chance of Diabetes")
-        print("Probablity:",prob)
+        st.write("Probablity:", prob)
     else:
         st.success("✅ Low chance of Diabetes")
         print("Probablity:",prob)
+
 
 
 
