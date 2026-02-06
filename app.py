@@ -16,9 +16,8 @@ bmi = st.number_input("BMI", 0.0, 70.0)
 dpf = st.number_input("Diabetes Pedigree Function", 0.0, 3.0)
 age = st.number_input("Age", 1, 120)
 
-if st.button("Predict"):
-    input_data = pd.DataFrame([{
-    "Pregnancies": preg,
+input_data=pd.DataFrame([{
+    "Pregnancies":preg,
     "Glucose": glucose,
     "BloodPressure": bp,
     "SkinThickness": skin,
@@ -26,10 +25,18 @@ if st.button("Predict"):
     "BMI": bmi,
     "DiabetesPedigreeFunction": dpf,
     "Age": age
-        }])
-    prediction=model.predict(input_data)
-    if prediction[0]==1:
-        st.error("⚠ High chance of Diabetes")
-    else:
-        st.success("✅ NO chance of Diabetes")
+}])
+
+prediction=model.predict(input_data)
+
+st.write("Prediction probability:", model.predict_proba(input_data))
+
+prob = model.predict_proba(input_data)[0][1]
+
+if prob > 0.6:
+    st.error("⚠ High chance of Diabetes")
+else:
+    st.success("✅ Low chance of Diabetes")
+    
+
 
