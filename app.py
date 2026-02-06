@@ -50,8 +50,8 @@ if glucose == 0 or bmi == 0 or bp == 0:
 
 input_df = clean_input(input_df)
 
-st.write("Prediction probability:", pipeline.predict_proba(input_df))
 prob = pipeline.predict_proba(input_df)[0][1]
+st.metric("Diabetes Risk Probability", f"{prob:.2%}")
 
 THRESHOLD=0.55
 
@@ -60,13 +60,6 @@ if st.button("Prediction"):
         st.error(f"💀 High risk of diabetes (Probability: {prob:.2f})")
     else:
         st.success(f"✅ Low risk of diabetes (Probability: {prob:.2f})")
-
-
-st.write("Probability:", prob)
-st.write("Input summary:", input_df.describe())
-
-
-
 
 
 
