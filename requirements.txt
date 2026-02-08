@@ -1,8 +1,9 @@
 numpy
-scikit-learn
+scikit-learn=1.6.1
 xgboost
 joblib
 streamlit
 altair==4.2.2
 matplotlib
 seaborn
+
