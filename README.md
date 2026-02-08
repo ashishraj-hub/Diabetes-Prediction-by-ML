@@ -16,22 +16,55 @@ The project follows **industry-standard ML practices**, including data preproces
 
 ---
 
-## 📂 Dataset
-- **Source:** Kaggle – Pima Indians Diabetes Dataset  
-- **Type:** Structured medical dataset  
-- **Target Variable:** `Outcome`
-  - `0` → No Diabetes
-  - `1` → Diabetes
+## 📊 Dataset Information
 
-### Features Used:
-- Pregnancies  
-- Glucose  
-- Blood Pressure  
-- Skin Thickness  
-- Insulin  
-- BMI  
-- Diabetes Pedigree Function  
-- Age  
+- **Dataset Name:** Pima Indians Diabetes Dataset  
+- **Source:** Kaggle  
+  https://www.kaggle.com/datasets/uciml/pima-indians-diabetes-database  
+
+### 🔢 Features Used
+
+| Feature | Description |
+|------|------------|
+| Pregnancies | Number of pregnancies |
+| Glucose | Plasma glucose concentration |
+| BloodPressure | Diastolic blood pressure |
+| SkinThickness | Triceps skin fold thickness |
+| Insulin | Serum insulin level |
+| BMI | Body Mass Index |
+| DiabetesPedigreeFunction | Genetic diabetes risk |
+| Age | Age of the patient |
+| Outcome | Target variable (0 = Non-diabetic, 1 = Diabetic) |
+
+---
+
+## ⚙️ Machine Learning Pipeline
+
+The entire ML workflow is implemented using a **Scikit-learn Pipeline** to prevent data leakage and ensure consistency between training and deployment.
+
+### 🧠 Pipeline Steps
+
+1. **Data Cleaning**
+   - Replaced medically invalid zero values with `NaN`
+   - Used **median imputation** (robust to skewed medical data)
+
+2. **Feature Scaling**
+   - StandardScaler used for normalization
+
+3. **Model**
+   - **XGBoost Classifier**
+   - Handles non-linear relationships effectively
+
+4. **Class Imbalance Handling**
+   - Used `scale_pos_weight` to reduce bias toward diabetic class
+
+5. **Probability Calibration**
+   - Applied **Isotonic Calibration**
+   - Ensures predicted probabilities reflect real risk
+
+6. **Threshold Tuning**
+   - Custom decision threshold instead of default 0.5
+   - Reduces false positives in non-diabetic cases
 
 ---
 
@@ -98,8 +131,39 @@ A **Scikit-learn Pipeline** was created to combine:
 
 ---
 
-## 🚀 Deployment (Not working currently wait for some time)
-The trained pipeline was serialized using `joblib` and deployed using **Streamlit**.
+## 📈 Model Performance (Approx.)
+
+- **Accuracy:** ~75%
+- **ROC-AUC:** ~0.78
+- **Balanced recall** for diabetic class
+- Stable and realistic probability outputs
+
+> ⚠️ Note: In healthcare ML, **probability reliability matters more than raw accuracy**.
+
+---
+
+## 🚀 Deployment
+
+- **Framework:** Streamlit
+- **Model Serialization:** joblib
+- **Hosting:** Streamlit Cloud
+- **Python Version:** 3.10 (pinned for compatibility)
+
+The deployed app:
+- Accepts patient inputs
+- Displays both **diabetic & non-diabetic probabilities**
+- Uses a **custom risk threshold** for final decision
+
+---
+
+## 🖥️ Application Interface
+
+Users can:
+- Enter patient medical data
+- View prediction probabilities
+- Receive a clear risk assessment (Low / High Risk)
+
+---
 
 ### Run the Application Locally:
 ```bash
@@ -110,30 +174,44 @@ streamlit run app.py
 ---
 
 ## 📁 Project Structure
-Disease-Prediction-Diabetes/
+diabetes-prediction-by-ml/
 │
-├── data/
-│   └── diabetes.csv
-│
-├── model/
-│   └── diabetes_xgboost_pipeline.joblib
-│
-├── Diabetes Prediction Model Train.ipynb
-├── app.py
-├── requirements.txt
-└── README.md
+├── app.py # Streamlit application
+├── diabetes_xgboost_pipeline.joblib # Trained & calibrated ML pipeline
+├── requirements.txt # Dependency versions (pinned)
+├── runtime.txt # Python version for deployment
+├── README.md # Project documentation
+├── Different Models Training And Evaluation.ipynb # Some models comparision
+├── Diabetes FinalPrediction Model Training #Final model selection and Training
 
 ---
 
-## 🔮 Future Improvements
+## 🧠 Key Design Decisions 
 
-- Hyperparameter tuning using GridSearchCV
+- Used median imputation instead of mean due to skewed medical data
 
-- Threshold optimization to further reduce false negatives
+- Avoided training-test leakage using a pipeline
 
-- Deployment on cloud platforms (Streamlit Cloud / HuggingFace Spaces)
+- Handled class imbalance explicitly instead of relying on accuracy
 
-- Addition of explainability tools (SHAP)
+- Calibrated probabilities for healthcare reliability
+
+- Pinned Python & library versions to ensure reproducible deployment
+
+---
+
+## 🧪 Sample Input Used for Testing
+
+```python
+Pregnancies: 1
+Glucose: 85
+BloodPressure: 66
+SkinThickness: 29
+Insulin: 80
+BMI: 26.6
+DiabetesPedigreeFunction: 0.351
+Age: 31
+```
 
 ---
 
@@ -146,9 +224,7 @@ Name: **Ashish Raj**
 📌LinkedIn: [Ashish Raj](https://www.linkedin.com/in/ashish-raj-ashishraj/)
 
 ---
+## 📬 Contact
 
-## 📜 Disclaimer
+If you have feedback, suggestions, or collaboration ideas, feel free to connect on LinkedIn.
 
-This project is for educational purposes only and should not be used as a substitute for professional medical diagnosis.
-
----
