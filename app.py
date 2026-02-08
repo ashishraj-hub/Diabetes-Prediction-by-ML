@@ -3,64 +3,50 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 
-pipeline=joblib.load("diabetes_xgboost_pipeline.joblib")
+model=joblib.load("diabetes_xgboost_pipeline.joblib")
 
-FEATURES = [
-    "Pregnancies",
-    "Glucose",
-    "BloodPressure",
-    "SkinThickness",
-    "Insulin",
-    "BMI",
-    "DiabetesPedigreeFunction",
-    "Age"
-]
+FEATURES= ["Pregnancies", "Glucose", "BloodPressure",
+    "SkinThickness", "Insulin", "BMI",
+    "DiabetesPedigreeFunction", "Age"]
 
-st.title("🩺 Diabetes Disease Prediction")
+THRESHOLD = 0.55  # tuned threshold
 
-st.info(
-    "Note: Zero values are not physiologically valid for medical features. "
-    "Predictions are reliable only for realistic inputs."
-)
+st.set_page_config(page_title="Diabetes Risk Predictor", layout="centered")
 
-preg = st.number_input("Pregnancies",0,20)
-glucose= st.number_input("Glucose", min_value=50, max_value=300, value=85)
-bp  = st.number_input("Blood Pressure", min_value=40, max_value=200, value=70)
-skin = st.number_input("Skin Thickness", 0, 100)
-insulin = st.number_input("Insulin", min_value=15, max_value=900, value=120)
-bmi = st.number_input("BMI", min_value=15.0, max_value=70.0, value=25.0)
-dpf = st.number_input("Diabetes Pedigree Function", 0.00, 3.00)
-age = st.number_input("Age", 1, 120)
+st.title("🩺 Diabetes Disease Prediction App")
+st.write("Enter patient details to assess diabetes risk.")
 
-def clean_input(df):
-    zero_as_missing = [
-        "Glucose", "BloodPressure", "SkinThickness",
-        "Insulin", "BMI"
-    ]
-    df[zero_as_missing] = df[zero_as_missing].replace(0, np.nan)
-    return df
+inputs = {
+    "Pregnancies": st.number_input("Pregnancies", 0, 20, 1),
+    "Glucose": st.number_input("Glucose", 0, 300, 85),
+    "BloodPressure": st.number_input("Blood Pressure", 0, 200, 66),
+    "SkinThickness": st.number_input("Skin Thickness", 0, 100, 29),
+    "Insulin": st.number_input("Insulin", 0, 900, 80),
+    "BMI": st.number_input("BMI", 0.0, 70.0, 26.6),
+    "DiabetesPedigreeFunction": st.number_input("Diabetes Pedigree Function", 0.0, 3.0, 0.351),
+    "Age": st.number_input("Age", 1, 120, 31)
+}
 
-input_df = pd.DataFrame([[preg, glucose, bp, skin, insulin, bmi, dpf, age]],
-                        columns=FEATURES)
-st.write("Input Data:",input_df)
+input_df=pd.DataFrame([inputs], columns=FEATURES)
 
-if glucose == 0 or bmi == 0 or bp == 0:
-    st.warning("Please enter valid medical values. Zero is not a realistic input.")
-    st.stop()
+st.subheader("Input Data")
+st.dataframe(input_df)
 
-input_df = clean_input(input_df)
+if st.button("Predict"):
+    probs=model.predict_proba(input_df)[0]
+    prob_non_diabetic=probs[0]
+    prob_diabetic=probs[1]
 
-prob = pipeline.predict_proba(input_df)[0][1]
-st.metric("Diabetes Risk Probability", f"{prob:.2%}")
+    st.subheader("Prediction Probability")
+    st.write({
+        "Non-diabetic": round(prob_non_diabetic, 3),
+        "Diabetic": round(prob_diabetic, 3)
+    })
 
-THRESHOLD=0.55
-
-if st.button("Prediction"):
-    if prob >= THRESHOLD:
-        st.error(f"💀 High risk of diabetes (Probability: {prob:.2f})")
+    if prob_diabetic >= THRESHOLD:
+        st.error(f"⚠️ High risk of diabetes (Probability: {prob_diabetic:.2f})")
     else:
-        st.success(f"✅ Low risk of diabetes (Probability: {prob:.2f})")
-
+        st.success(f"✅ Low risk of diabetes (Probability: {prob_diabetic:.2f})")
 
 
 
