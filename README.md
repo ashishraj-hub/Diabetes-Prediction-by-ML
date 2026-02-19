@@ -221,9 +221,9 @@ Age: 31
 
 Name: **Ashish Raj**
 
-📌GitHub: [Ashish Raj](https://github.com/ashishraj-hub)
+📌GitHub: [Click here](https://github.com/ashishraj-hub)
 
-📌LinkedIn: [Ashish Raj](https://www.linkedin.com/in/ashish-raj-ashishraj/)
+📌LinkedIn: [Click here](https://www.linkedin.com/in/ashish-raj-ashishraj/)
 
 ---
 ## 📬 Contact
