@@ -154,7 +154,7 @@ The deployed app:
 - Displays both **diabetic & non-diabetic probabilities**
 - Uses a **custom risk threshold** for final decision
 
-🌐Live App:- [Click here]https://diabetes-prediction-by-ml-44ubbvsaqdycgfe5rxuejm.streamlit.app/
+🌐Live App:- [[Click here](https://diabetes-prediction-by-ml-44ubbvsaqdycgfe5rxuejm.streamlit.app/)
 
 ---
 
