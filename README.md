@@ -221,12 +221,23 @@ Age: 31
 
 Name: **Ashish Raj**
 
-📌GitHub: [Click here](https://github.com/ashishraj-hub)
-
-📌LinkedIn: [Click here](https://www.linkedin.com/in/ashish-raj-ashishraj/)
+| Platform | Link |
+|----|----|
+| 💼 LinkedIn | [Ashish Raj](https://www.linkedin.com/in/ashish-raj-ashishraj/) |
+| 🐙 GitHub | [Ashish Raj](https://github.com/ashishraj-hub)  |
 
 ---
 ## 📬 Contact
 
-If you have feedback, suggestions, or collaboration ideas, feel free to connect on LinkedIn.
+- If you have feedback, suggestions, or collaboration ideas, feel free to connect on LinkedIn.
 
+---
+
+## ⭐ Support This Project
+
+If this README or project helped you:
+- **Star** ⭐ this repository
+- **Fork** 🍴 it and build your own version
+- **Share** it with someone who is learning Data Science or AI/ML
+
+---
